@@ -1,39 +1,138 @@
-import "./Sidebar.css"; // Estilos CSS específicos del sidebar
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faRightFromBracket, faBars } from "@fortawesome/free-solid-svg-icons";
-import Logo from "../../assets/images/logos/logo4.png"; // Logo de la aplicación
-import MenuItem from "./MenuItem"; // Componente para renderizar cada elemento del menú
-import { menuItems } from "../../utils/menuData"; // Datos del menú importados
+import React, { useState } from "react";
+import {
+  Drawer,
+  Box,
+  Typography,
+  List,
+  Divider,
+  IconButton,
+  useTheme,
+  useMediaQuery,
+} from "@mui/material";
+import { Menu as MenuIcon, ExitToApp as LogoutIcon } from "@mui/icons-material";
+import Logo from "../../assets/images/logos/logo4.png";
+import MenuItem from "./menuItem";
+import { menuItems } from "../../utils/menuData";
 
-function Sidebar() {
+const drawerWidth = 240;
+
+interface SidebarProps {
+  onToggle?: (isOpen: boolean) => void;
+}
+
+function Sidebar({ onToggle }: SidebarProps) {
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
+  const [isOpen, setIsOpen] = useState(!isMobile);
+
+  const toggleDrawer = () => {
+    const newState = !isOpen;
+    setIsOpen(newState);
+    onToggle?.(newState);
+  };
+
+  const handleClose = () => {
+    setIsOpen(false);
+    onToggle?.(false);
+  };
+
   return (
-    <div className="sidebar">
-      {/* Encabezado del sidebar con botón toggle y logo */}
-      <div className="sidebar-header">
-        {/* Botón para mostrar/ocultar el sidebar (hamburger menu) */}
-        <button className="toogle-btn" type="button">
-          <FontAwesomeIcon icon={faBars} /> {/* Icono de hamburguesa */}
-        </button>
-        {/* Logo de la aplicación */}
-        <img src={Logo} alt="" className="logo-nav" />
-      </div>
+    <>
+      {/* Botón para abrir el sidebar - posición dinámica */}
+      <IconButton
+        onClick={toggleDrawer}
+        sx={{
+          position: "fixed",
+          top: 10,
+          left: 10,
+          zIndex: 1300,
+          backgroundColor: "#1e2a38",
+          color: "#fff",
+          transition: "left 0.3s ease",
+          "&:hover": {
+            backgroundColor: "#3b8ee7",
+          },
+        }}
+      >
+        <MenuIcon />
+      </IconButton>
 
-      {/* Navegación principal del sidebar */}
-      <ul className="sidebar-nav">
-        {/* Mapea cada elemento del menú y renderiza un componente MenuItem */}
-        {menuItems.map((item) => (
-          <MenuItem key={item.id} item={item} /> /* Cada elemento del menú */
-        ))}
-      </ul>
+      <Drawer
+        variant="persistent"
+        open={isOpen}
+        sx={{
+          width: isOpen ? drawerWidth : 0,
+          flexShrink: 0,
+          transition: theme.transitions.create("width", {
+            easing: theme.transitions.easing.sharp,
+            duration: theme.transitions.duration.enteringScreen,
+          }),
+          [`& .MuiDrawer-paper`]: {
+            width: drawerWidth,
+            boxSizing: "border-box",
+            backgroundColor: "#1e2a38",
+            color: "#fff",
+            position: "relative",
+          },
+        }}
+      >
+        {/* Header del sidebar */}
+        <Box
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "start",
+            padding: theme.spacing(1, 2),
+            minHeight: 60,
+          }}
+        >
+          <Box
+            component="img"
+            src={Logo}
+            alt="Logo"
+            sx={{ height: 35, marginLeft: 5 }}
+          />
+        </Box>
 
-      {/* Pie del sidebar con opción de logout */}
-      <div className="sidebar-footer">
-        <a href="#" id="logoutLink" className="sidebar-link">
-          <span>Logout</span> {/* Texto del enlace */}
-          <FontAwesomeIcon icon={faRightFromBracket} /> {/* Icono de salida */}
-        </a>
-      </div>
-    </div>
+        <Divider sx={{ backgroundColor: "rgba(255, 255, 255, 0.2)" }} />
+
+        {/* Navegación principal */}
+        <Box sx={{ overflow: "auto", flex: 1 }}>
+          <List sx={{ padding: 0 }}>
+            {menuItems.map((item) => (
+              <MenuItem key={item.id} item={item} />
+            ))}
+          </List>
+        </Box>
+
+        {/* Footer del sidebar */}
+        <Box
+          sx={{
+            padding: theme.spacing(2),
+            backgroundColor: "rgba(0, 0, 0, 0.2)",
+            borderTop: "1px solid rgba(255, 255, 255, 0.1)",
+          }}
+        >
+          <Box
+            component="a"
+            href="#"
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+              color: "#fff",
+              textDecoration: "none",
+              "&:hover": {
+                color: "#3b8ee7",
+              },
+            }}
+          >
+            <Typography variant="body2">Logout</Typography>
+            <LogoutIcon />
+          </Box>
+        </Box>
+      </Drawer>
+    </>
   );
 }
 

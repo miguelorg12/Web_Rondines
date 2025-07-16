@@ -1,41 +1,64 @@
-// Definición de la interfaz para los elementos del menú
+import type { ReactNode } from "react";
+import {
+  Home as HomeIcon,
+  People as PeopleIcon,
+  Assignment as LogsIcon,
+  Store as StoreIcon,
+  Assessment as ReportsIcon,
+  PersonAdd as PersonAddIcon,
+  Visibility as VisibilityIcon,
+} from "@mui/icons-material";
+
 export interface MenuItem {
-  id: string; // Identificador único del elemento del menú
-  label: string; // Texto que se mostrará en el menú
-  icon?: string; // Icono para el elemento del menú
-  href?: string; // URL para la navegación
-  submenu?: MenuItem[]; // Array de sub-elementos para crear menús desplegables
+  id: string;
+  label: string;
+  icon?: ReactNode;
+  href?: string;
+  submenu?: MenuItem[];
 }
 
-// Array de elementos del menú principal de la aplicación
 export const menuItems: MenuItem[] = [
   {
     id: "inicio",
     label: "Inicio",
-    href: "#", // Enlace placeholder - debería apuntar a la página de inicio
+    icon: <HomeIcon />,
+    href: "#",
   },
   {
     id: "usuarios",
     label: "Usuarios",
-    // Este elemento tiene un submenú con opciones relacionadas a usuarios
+    icon: <PeopleIcon />,
     submenu: [
-      { id: "crear-usuario", label: "Crear Usuario", href: "#" },
-      { id: "ver-usuarios", label: "Ver Usuarios", href: "#" },
+      {
+        id: "crear-usuario",
+        label: "Crear Usuario",
+        icon: <PersonAddIcon />,
+        href: "#",
+      },
+      {
+        id: "ver-usuarios",
+        label: "Ver Usuarios",
+        icon: <VisibilityIcon />,
+        href: "#",
+      },
     ],
   },
   {
     id: "logs",
     label: "Logs",
-    href: "#", // Enlace para ver los logs del sistema
+    icon: <LogsIcon />,
+    href: "#",
   },
   {
     id: "sucursales",
     label: "Sucursales",
-    href: "#", // Enlace para gestionar sucursales
+    icon: <StoreIcon />,
+    href: "#",
   },
   {
     id: "reportes",
     label: "Reportes",
-    href: "#", // Enlace para generar reportes
+    icon: <ReportsIcon />,
+    href: "#",
   },
 ];

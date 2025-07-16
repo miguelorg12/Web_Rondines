@@ -1,56 +1,96 @@
 import React, { useState } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faAngleDown, faAngleUp } from "@fortawesome/free-solid-svg-icons";
+import {
+  ListItem,
+  ListItemButton,
+  ListItemText,
+  List,
+  Collapse,
+  Box,
+  Typography,
+} from "@mui/material";
+import { ExpandLess, ExpandMore } from "@mui/icons-material";
 import type { MenuItem as MenuItemType } from "../../utils/menuData";
 
-// Definición de las propiedades que recibe el componente
 interface MenuItemProps {
-  item: MenuItemType; // Objeto con los datos del elemento del menú
+  item: MenuItemType;
 }
 
-// Componente funcional que renderiza un elemento del menú
 const MenuItem: React.FC<MenuItemProps> = ({ item }) => {
-  // Estado para controlar si el submenú está abierto o cerrado
   const [isOpen, setIsOpen] = useState(false);
 
-  // Función para alternar la visibilidad del submenú
   const toggleSubmenu = () => {
-    setIsOpen(!isOpen); // Cambia el estado entre true y false
+    setIsOpen(!isOpen);
+  };
+
+  const handleClick = (e: React.MouseEvent) => {
+    if (item.submenu) {
+      e.preventDefault();
+      toggleSubmenu();
+    }
   };
 
   return (
-    <li>
-      {/* Enlace principal del elemento del menú */}
-      <a
-        href={item.href || "#"} // Usa la URL del item o "#" como fallback
-        className="nav-link" // Clase CSS para estilos
-        onClick={item.submenu ? toggleSubmenu : undefined} // Solo ejecuta toggle si hay submenú
-      >
-        {item.label} {/* Texto del elemento del menú */}
-        {/* Icono de flecha solo si el elemento tiene submenú */}
-        {item.submenu && (
-          <FontAwesomeIcon
-            icon={isOpen ? faAngleUp : faAngleDown} // Cambia el icono según el estado
+    <>
+      <ListItem disablePadding>
+        <ListItemButton
+          component="a"
+          href={item.href || "#"}
+          onClick={handleClick}
+          sx={{
+            color: "#fff",
+            "&:hover": {
+              backgroundColor: "rgba(59, 142, 231, 0.1)",
+              color: "#3b8ee7",
+            },
+            paddingLeft: 3,
+          }}
+        >
+          <ListItemText
+            primary={
+              <Typography variant="body1" sx={{ fontSize: "1.1rem" }}>
+                {item.label}
+              </Typography>
+            }
           />
-        )}
-      </a>
+          {item.submenu && (
+            <Box sx={{ color: "inherit" }}>
+              {isOpen ? <ExpandLess /> : <ExpandMore />}
+            </Box>
+          )}
+        </ListItemButton>
+      </ListItem>
 
-      {/* Renderiza el submenú solo si existe y está abierto */}
-      {item.submenu && isOpen && (
-        <ul className="submenu">
-          {/* Mapea cada elemento del submenú */}
-          {item.submenu.map((subItem) => (
-            <li key={subItem.id}>
-              {" "}
-              {/* Clave única para cada sub-elemento */}
-              <a href={subItem.href} className="submenu-link">
-                {subItem.label} {/* Texto del sub-elemento */}
-              </a>
-            </li>
-          ))}
-        </ul>
+      {item.submenu && (
+        <Collapse in={isOpen} timeout="auto" unmountOnExit>
+          <List component="div" disablePadding>
+            {item.submenu.map((subItem) => (
+              <ListItem key={subItem.id} disablePadding>
+                <ListItemButton
+                  component="a"
+                  href={subItem.href}
+                  sx={{
+                    color: "#bbb",
+                    paddingLeft: 5,
+                    "&:hover": {
+                      backgroundColor: "rgba(59, 142, 231, 0.1)",
+                      color: "#3b8ee7",
+                    },
+                  }}
+                >
+                  <ListItemText
+                    primary={
+                      <Typography variant="body2" sx={{ fontSize: "1rem" }}>
+                        {subItem.label}
+                      </Typography>
+                    }
+                  />
+                </ListItemButton>
+              </ListItem>
+            ))}
+          </List>
+        </Collapse>
       )}
-    </li>
+    </>
   );
 };
 
