@@ -35,8 +35,7 @@ function Layout({
         display: "flex",
         flexDirection: "column",
         minHeight: "100vh",
-        width: sidebarOpen ? `calc(100% - ${drawerWidth}px)` : "100%",
-        marginLeft: sidebarOpen ? `${drawerWidth}px` : 0,
+        width: "100%",
         backgroundColor: "#e5e5e5",
         transition: theme.transitions.create(["width", "margin"], {
           easing: theme.transitions.easing.sharp,
