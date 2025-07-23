@@ -42,6 +42,11 @@ export const menuItems: MenuItem[] = [
     href: "/logs",
   },
   {
+    id: "empresas",
+    label: "Empresas",
+    href: "/empresas",
+  },
+  {
     id: "sucursales",
     label: "Sucursales",
     href: "/sucursales",

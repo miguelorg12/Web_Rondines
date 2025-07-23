@@ -1,3 +1,19 @@
+.create-user-btn {
+  background-color: #1e2a38 !important;
+  color: #fff !important;
+  padding: 5px 15px !important;
+  border: none !important;
+  border-radius: 5px !important;
+  cursor: pointer !important;
+  transition: background-color 0.3s ease !important;
+  font-size: 0.7rem !important;
+}
+
+.create-user-btn:hover {
+  background-color: #112a47 !important;
+  color: #fff !important;
+}
+
 /* Encabezado de la tabla */
 .custom-table-container {
   background-color: #f5f5f5 !important;
@@ -34,8 +50,8 @@
 }
 
 .custom-table .edit-btn {
-  background: #3b8ee7;
-  color: #fff;
+  background: transparent;
+  color: #3b8ee7;
   transition: background-color 0.3s ease;
   padding: 5px;
   border-radius: 5px;
@@ -43,8 +59,8 @@
 }
 
 .custom-table .delete-btn {
-  background: #fd5765;
-  color: #fff;
+  background: transparent;
+  color: #fd5765;
   transition: background-color 0.3s ease;
   padding: 5px;
   border-radius: 5px;

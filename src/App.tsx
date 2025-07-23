@@ -34,7 +34,7 @@ function App() {
               <Layout
                 sidebarOpen={sidebarOpen}
                 title="Dashboard"
-                description="En este apartado podrás ver las comparaciones del rendimiento día a día, identificar picos y caídas de actividad y tomar decisiones informadas al instante"
+                description="En este apoartado podras ver las Comparar el rendimiento día a día, Identificar picos y caídas de actividad Tomar decisiones informadas al instante"
               >
                 <Dashboard />
               </Layout>

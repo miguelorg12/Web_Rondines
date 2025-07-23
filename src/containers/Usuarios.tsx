@@ -11,7 +11,11 @@ import {
   TextField,
   Select,
   MenuItem,
+  Button,
 } from "@mui/material";
+import Pagination from "@mui/material/Pagination";
+import Stack from "@mui/material/Stack";
+import { useNavigate } from "react-router-dom";
 import { usuariosData } from "../utils/usuariosData";
 import "../components/usuarios/usuarios.css";
 
@@ -19,6 +23,7 @@ function Usuarios() {
   const [filterText, setFilterText] = useState("");
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
+  const navigate = useNavigate();
 
   const filteredData = usuariosData.filter(
     (item) =>
@@ -40,8 +45,26 @@ function Usuarios() {
     setPage(0);
   };
 
+  // Nueva función para navegar a crear usuario
+  const handleCrearUsuario = () => {
+    navigate("/usuarios/crear");
+  };
+
   return (
     <Paper sx={{ width: "100%", overflow: "hidden", p: 2 }}>
+      {/* Botón Crear usuario */}
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "flex-end",
+          marginBottom: 16,
+        }}
+      >
+        <Button className="create-user-btn" onClick={handleCrearUsuario}>
+          Crear usuario
+        </Button>
+      </div>
+      {/* Filtros */}
       <div
         style={{
           display: "flex",
@@ -103,16 +126,17 @@ function Usuarios() {
           </TableBody>
         </Table>
       </TableContainer>
-      <TablePagination
-        component="div"
-        count={filteredData.length}
-        page={page}
-        onPageChange={handleChangePage}
-        rowsPerPage={rowsPerPage}
-        onRowsPerPageChange={handleChangeRowsPerPage}
-        rowsPerPageOptions={[5, 10, 15]}
-        labelRowsPerPage="Filas por página"
-      />
+      <Stack direction="row" justifyContent="end" sx={{ mt: 2 }}>
+        <Pagination
+          count={Math.ceil(filteredData.length / rowsPerPage)}
+          page={page + 1}
+          onChange={(_, value) => setPage(value - 1)}
+          color="primary"
+          shape="rounded"
+          showFirstButton
+          showLastButton
+        />
+      </Stack>
     </Paper>
   );
 }
