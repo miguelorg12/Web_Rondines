@@ -131,8 +131,7 @@ function Layout({
               marginBottom: theme.spacing(2.5),
               boxSizing: "border-box",
               filter: "drop-shadow(0 0 1rem rgba(0, 0, 0, 0.1))",
-              height: "90%",
-              maxHeight: "100vh",
+              minHeight: "90%",
               overflow: "auto",
             }}
           >

@@ -77,3 +77,92 @@
 .MuiTablePagination-input {
   display: none !important;
 }
+
+.cu-p {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #1e2a38;
+  margin-bottom: 20px;
+}
+
+.cu-p2 {
+  color: #1e2a38;
+  margin-bottom: 20px;
+  margin-top: 30px;
+}
+
+/* Quita el borde del TextField variant="outlined" */
+.custom-textfield .MuiOutlinedInput-notchedOutline {
+  border: none !important;
+}
+.custom-textfield .MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline,
+.custom-textfield
+  .MuiOutlinedInput-root.Mui-focused
+  .MuiOutlinedInput-notchedOutline {
+  border: none !important;
+}
+
+.custom-textfield {
+  background: #eaeaea;
+  border: none !important;
+  border-radius: 0 !important;
+  padding: 5px 10px !important;
+}
+
+.custom-textfield label {
+  top: -5px;
+}
+
+.custom-textfield input,
+.custom-textfield select {
+  border: none !important;
+  border-radius: 0 !important;
+  padding: 5px !important;
+}
+
+/* Oculta el label cuando el select tiene valor */
+.custom-textfield .MuiInputLabel-shrink {
+  display: none !important;
+}
+
+.custom-textfield .MuiSelect-select {
+  padding-top: 6px !important;
+  padding-bottom: 6px !important;
+  padding-left: 8px !important;
+  padding-right: 24px !important; /* deja espacio para el icono */
+  min-height: unset !important;
+}
+
+.cancel-btn {
+  background: #e5e5e5 !important;
+  color: #1e2a38 !important;
+  padding: 5px 15px !important;
+  border: none !important;
+  border-radius: 5px !important;
+  cursor: pointer !important;
+  transition: background-color 0.3s ease !important;
+  font-size: 0.7rem !important;
+  font-weight: 600 !important;
+}
+
+.cancel-btn:hover {
+  background-color: #d1d1d1 !important;
+  color: #1e2a38 !important;
+}
+
+.create-btn {
+  background-color: #112a47 !important;
+  color: #fff !important;
+  padding: 5px 15px !important;
+  border: none !important;
+  border-radius: 5px !important;
+  cursor: pointer !important;
+  transition: background-color 0.3s ease !important;
+  font-size: 0.7rem !important;
+  font-weight: 600 !important;
+}
+
+.create-btn:hover {
+  background-color: #0d1f36 !important;
+  color: #fff !important;
+}

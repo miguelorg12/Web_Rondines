@@ -57,8 +57,8 @@ function App() {
             element={
               <Layout
                 sidebarOpen={sidebarOpen}
-                title="Crear Usuario"
-                description="Agregar un nuevo usuario al sistema"
+                title="Usuarios"
+                description="En este apoartado podras ver, editar y crear usuarios"
               >
                 <CrearUsuario />
               </Layout>
