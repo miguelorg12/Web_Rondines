@@ -9,9 +9,10 @@ import Layout from "./components/layout/layout";
 import Dashboard from "./containers/Dashboard";
 import Usuarios from "./containers/Usuarios";
 import CrearUsuario from "./containers/CrearUsuario";
-// import Reportes from "./containers/Reportes";
-// import Logs from "./containers/Logs";
-// import Sucursales from "./containers/Sucursales";
+import Logs from "./containers/Logs";
+import Reportes from "./containers/Reportes";
+import Empresas from "./containers/Empresas";
+import Sucursales from "./containers/sucursales";
 
 function App() {
   const theme = useTheme();
@@ -61,6 +62,54 @@ function App() {
                 description="En este apoartado podras ver, editar y crear usuarios"
               >
                 <CrearUsuario />
+              </Layout>
+            }
+          />
+          <Route
+            path="/logs"
+            element={
+              <Layout
+                sidebarOpen={sidebarOpen}
+                title="Logs"
+                description="En este apoartado podras ver las acciones de los usuarios"
+              >
+                <Logs />
+              </Layout>
+            }
+          />
+          <Route
+            path="/empresas"
+            element={
+              <Layout
+                sidebarOpen={sidebarOpen}
+                title="Empresas"
+                description="En este apartado podras ver las empresas"
+              >
+                <Empresas />
+              </Layout>
+            }
+          />
+          <Route
+            path="/sucursales"
+            element={
+              <Layout
+                sidebarOpen={sidebarOpen}
+                title="Sucursales"
+                description="En este apartado podras ver las sucursales"
+              >
+                <Sucursales />
+              </Layout>
+            }
+          />
+          <Route
+            path="/reportes"
+            element={
+              <Layout
+                sidebarOpen={sidebarOpen}
+                title="Reportes"
+                description="En este apartado podras ver los reportes de los guardias"
+              >
+                <Reportes />
               </Layout>
             }
           />
