@@ -1,0 +1,145 @@
+import React, { useState } from 'react';
+import { Box, Button, Paper, Typography, Alert } from '@mui/material';
+import ValidatedTextField from './ValidatedTextField';
+import { validators } from '../../utils/validators';
+
+const UserFormExample: React.FC = () => {
+  const [formData, setFormData] = useState({
+    name: '',
+    last_name: '',
+    email: '',
+    curp: '',
+    password: '',
+    // biometric se maneja automáticamente
+  });
+
+  const [showSuccess, setShowSuccess] = useState(false);
+
+  const handleFieldChange = (field: string, value: string) => {
+    setFormData(prev => ({ ...prev, [field]: value }));
+  };
+
+  const handleSubmit = () => {
+    // Validar todo el formulario
+    const formValidators = {
+      name: validators.validateName,
+      last_name: validators.validateName,
+      email: validators.validateEmail,
+      curp: validators.validateCURP,
+      password: validators.validatePassword,
+    };
+
+    const { isValid, errors } = validators.validateForm(formData, formValidators);
+
+    if (isValid) {
+      // Preparar datos con biométrico automático (0)
+      const userDataWithBiometric = validators.prepareUserData(formData);
+      setShowSuccess(true);
+      console.log('Formulario válido:', userDataWithBiometric);
+    } else {
+      console.log('Errores de validación:', errors);
+      alert('Por favor corrige los errores en el formulario');
+    }
+  };
+
+  return (
+    <Paper sx={{ p: 3, maxWidth: 600, mx: 'auto', mt: 3 }}>
+      <Typography variant="h5" gutterBottom>
+        Formulario de Usuario con Validaciones
+      </Typography>
+      
+      {showSuccess && (
+        <Alert severity="success" sx={{ mb: 2 }}>
+          ¡Usuario creado correctamente!
+        </Alert>
+      )}
+
+      <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+        <ValidatedTextField
+          label="Nombre"
+          value={formData.name}
+          onChange={(value) => handleFieldChange('name', value)}
+          validator={validators.validateName}
+          fullWidth
+          required
+        />
+
+        <ValidatedTextField
+          label="Apellido"
+          value={formData.last_name}
+          onChange={(value) => handleFieldChange('last_name', value)}
+          validator={validators.validateName}
+          fullWidth
+          required
+        />
+
+        <ValidatedTextField
+          label="Email"
+          type="email"
+          value={formData.email}
+          onChange={(value) => handleFieldChange('email', value)}
+          validator={validators.validateEmail}
+          fullWidth
+          required
+        />
+
+        <ValidatedTextField
+          label="CURP"
+          value={formData.curp}
+          onChange={(value) => handleFieldChange('curp', value)}
+          validator={validators.validateCURP}
+          fullWidth
+          required
+          placeholder="GODE560427MDFLML09"
+        />
+
+        <ValidatedTextField
+          label="Contraseña"
+          type="password"
+          value={formData.password}
+          onChange={(value) => handleFieldChange('password', value)}
+          validator={validators.validatePassword}
+          fullWidth
+          required
+          placeholder="Mínimo 12 caracteres, mayúscula, minúscula, número y símbolo"
+        />
+
+        {/* Campo biométrico se maneja automáticamente */}
+        <Box sx={{ p: 2, bgcolor: 'info.50', borderRadius: 1, border: '1px solid #1976d2' }}>
+          <Typography variant="body2" color="text.secondary" sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+            <span style={{ fontSize: '1.2em' }}>ℹ️</span>
+            <strong>Nota:</strong> El campo "Datos Biométricos" se maneja automáticamente y se enviará como null.
+          </Typography>
+        </Box>
+
+        <Button
+          variant="contained"
+          onClick={handleSubmit}
+          sx={{ mt: 2 }}
+          fullWidth
+        >
+          Crear Usuario
+        </Button>
+      </Box>
+
+      <Box sx={{ mt: 3, p: 2, bgcolor: 'grey.100', borderRadius: 1 }}>
+        <Typography variant="h6" gutterBottom>
+          Datos del Formulario:
+        </Typography>
+        <pre style={{ fontSize: '12px', overflow: 'auto' }}>
+          {JSON.stringify(formData, null, 2)}
+        </pre>
+      </Box>
+
+      <Box sx={{ mt: 2, p: 2, bgcolor: 'warning.50', borderRadius: 1, border: '1px solid #ed6c02' }}>
+        <Typography variant="body2" color="text.secondary" sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+          <span style={{ fontSize: '1.2em' }}>⚠️</span>
+          <strong>Campo Biométrico:</strong> Se envía automáticamente como null. 
+          Este campo quedará pendiente para futuras implementaciones.
+        </Typography>
+      </Box>
+    </Paper>
+  );
+};
+
+export default UserFormExample; 

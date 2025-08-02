@@ -1,18 +1,20 @@
-export const empresasData = [
+import type { Company } from "../interfaces";
+
+export const empresasData: Company[] = [
   {
     id: 1,
-    numEmpresa: "E001",
-    nombre: "Empresa Uno",
-    direccion: "Av. Principal 123, Centro",
+    companyNumber: "E001",
+    name: "Empresa Uno",
+    address: "Av. Principal 123, Centro",
     email: "contacto@empresauno.com",
-    telefono: "555-123-4567",
+    phone: "555-123-4567",
   },
   {
     id: 2,
-    numEmpresa: "E002",
-    nombre: "Empresa Dos",
-    direccion: "Calle Secundaria 456, Norte",
+    companyNumber: "E002",
+    name: "Empresa Dos",
+    address: "Calle Secundaria 456, Norte",
     email: "info@empresados.com",
-    telefono: "555-987-6543",
+    phone: "555-987-6543",
   },
 ];

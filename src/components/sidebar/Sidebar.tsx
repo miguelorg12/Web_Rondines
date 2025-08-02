@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import {
   Drawer,
   Box,
@@ -29,11 +29,6 @@ function Sidebar({ onToggle }: SidebarProps) {
     const newState = !isOpen;
     setIsOpen(newState);
     onToggle?.(newState);
-  };
-
-  const handleClose = () => {
-    setIsOpen(false);
-    onToggle?.(false);
   };
 
   return (

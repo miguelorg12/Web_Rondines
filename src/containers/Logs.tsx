@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import {
   Table,
   TableBody,
@@ -13,11 +13,11 @@ import {
   Button,
   InputAdornment,
 } from "@mui/material";
+import type { SelectChangeEvent } from "@mui/material";
 import Pagination from "@mui/material/Pagination";
 import Stack from "@mui/material/Stack";
 import { logsData } from "../utils/logsData";
 import "../components/usuarios/usuarios.css";
-import "../components/logs/logs.css";
 
 function Logs() {
   const [filterText, setFilterText] = useState("");
@@ -39,14 +39,8 @@ function Logs() {
       (fechaFin === "" || new Date(item.fechaHora) <= new Date(fechaFin))
   );
 
-  const handleChangePage = (_: unknown, newPage: number) => setPage(newPage);
-  const handleChangeRowsPerPage = (
-    event:
-      | React.ChangeEvent<{ value: unknown }>
-      | React.ChangeEvent<HTMLInputElement>
-      | any
-  ) => {
-    setRowsPerPage(parseInt(event.target.value as string, 10));
+  const handleChangeRowsPerPage = (event: SelectChangeEvent<number>) => {
+    setRowsPerPage(Number(event.target.value));
     setPage(0);
   };
 

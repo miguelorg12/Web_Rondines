@@ -1,26 +1,28 @@
-export const reportesData = [
+import type { Report } from "../interfaces";
+
+export const reportesData: Report[] = [
   {
     id: 1,
-    numReporte: "R001",
-    guardia: "Luis Gómez",
-    sucursal: "Centro",
-    incidencia: "Puerta abierta",
-    fecha: "2025-07-23",
+    reportNumber: "R001",
+    guard: "Luis Gómez",
+    branch: "Centro",
+    incident: "Puerta abierta",
+    date: "2025-07-23",
   },
   {
     id: 2,
-    numReporte: "R002",
-    guardia: "María Torres",
-    sucursal: "Norte",
-    incidencia: "Alarma activada",
-    fecha: "2025-07-22",
+    reportNumber: "R002",
+    guard: "María Torres",
+    branch: "Norte",
+    incident: "Alarma activada",
+    date: "2025-07-22",
   },
   {
     id: 3,
-    numReporte: "R003",
-    guardia: "Pedro Sánchez",
-    sucursal: "Sur",
-    incidencia: "Ronda incompleta",
-    fecha: "2025-07-21",
+    reportNumber: "R003",
+    guard: "Pedro Sánchez",
+    branch: "Sur",
+    incident: "Ronda incompleta",
+    date: "2025-07-21",
   },
 ];

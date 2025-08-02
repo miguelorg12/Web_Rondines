@@ -6,7 +6,6 @@ import {
   Typography,
   Paper,
   useTheme,
-  useMediaQuery,
 } from "@mui/material";
 
 // Definición de la interfaz para las propiedades del componente
@@ -14,20 +13,16 @@ interface LayoutProps {
   children: React.ReactNode; // Contenido hijo que se renderizará dentro del layout
   title?: string; // Título opcional para la página
   description?: string; // Descripción opcional para la página
-  sidebarOpen?: boolean; // Estado del sidebar para ajustar el layout
+  sidebarOpen?: boolean; // Estado del sidebar para ajustar el layout (no usado actualmente)
 }
-
-const drawerWidth = 240;
 
 // Componente funcional que define la estructura base de todas las vistas
 function Layout({
   children,
   title,
   description,
-  sidebarOpen = false,
 }: LayoutProps) {
   const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
 
   return (
     <Box
