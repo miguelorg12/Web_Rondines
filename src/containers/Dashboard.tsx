@@ -41,6 +41,19 @@ function Dashboard() {
 
   // API hooks para estadísticas
   const { data: generalStats, error: generalError, isLoading: generalLoading } = useGetGeneralStatsQuery();
+  
+  // Función para calcular estadísticas derivadas
+  const calculateDerivedStats = (stats: GeneralStats) => {
+    const resolvedIncidents = stats.by_status.find(s => s.status === 'completado')?.count || '0';
+    const pendingIncidents = stats.by_status.find(s => s.status === 'pendiente')?.count || '0';
+    const criticalIncidents = stats.by_severity.find(s => s.severity === 'alta')?.count || '0';
+    
+    return {
+      resolvedIncidents: parseInt(resolvedIncidents),
+      pendingIncidents: parseInt(pendingIncidents),
+      criticalIncidents: parseInt(criticalIncidents)
+    };
+  };
   const { data: branchStats, error: branchError, isLoading: branchLoading } = useGetStatsByBranchQuery();
   const { data: companyStats, error: companyError, isLoading: companyLoading } = useGetStatsByCompanyQuery();
 
@@ -85,7 +98,7 @@ function Dashboard() {
                     Total de Incidentes
                   </Typography>
                   <Typography variant="h4">
-                    {generalStats.totalIncidents}
+                    {generalStats.total_incidents}
                   </Typography>
                 </CardContent>
               </Card>
@@ -97,7 +110,7 @@ function Dashboard() {
                     Incidentes Resueltos
                   </Typography>
                   <Typography variant="h4" color="success.main">
-                    {generalStats.resolvedIncidents}
+                    {generalStats ? calculateDerivedStats(generalStats).resolvedIncidents : 0}
                   </Typography>
                 </CardContent>
               </Card>
@@ -109,7 +122,7 @@ function Dashboard() {
                     Incidentes Pendientes
                   </Typography>
                   <Typography variant="h4" color="warning.main">
-                    {generalStats.pendingIncidents}
+                    {generalStats ? calculateDerivedStats(generalStats).pendingIncidents : 0}
                   </Typography>
                 </CardContent>
               </Card>
@@ -121,7 +134,7 @@ function Dashboard() {
                     Incidentes Críticos
                   </Typography>
                   <Typography variant="h4" color="error.main">
-                    {generalStats.criticalIncidents}
+                    {generalStats ? calculateDerivedStats(generalStats).criticalIncidents : 0}
                   </Typography>
                 </CardContent>
               </Card>
@@ -152,12 +165,12 @@ function Dashboard() {
                  </Typography>
                  <Box sx={{ mt: 2 }}>
                    {branchStats.map((branch, index) => (
-                     <Box key={branch.branchId} sx={{ mb: 2, p: 2, border: '1px solid #e0e0e0', borderRadius: 1 }}>
+                     <Box key={branch.branch_id} sx={{ mb: 2, p: 2, border: '1px solid #e0e0e0', borderRadius: 1 }}>
                        <Typography variant="subtitle1" fontWeight="bold">
-                         {branch.branchName}
+                         {branch.branch_name}
                        </Typography>
                        <Typography variant="body2" color="textSecondary">
-                         Total: {branch.totalIncidents} | Resueltos: {branch.resolvedIncidents} | Pendientes: {branch.pendingIncidents}
+                         Empresa: {branch.company_name} | Total de incidentes: {branch.total_incidents}
                        </Typography>
                      </Box>
                    ))}
@@ -188,12 +201,12 @@ function Dashboard() {
                  </Typography>
                  <Box sx={{ mt: 2 }}>
                    {companyStats.map((company, index) => (
-                     <Box key={company.companyId} sx={{ mb: 2, p: 2, border: '1px solid #e0e0e0', borderRadius: 1 }}>
+                     <Box key={company.company_id} sx={{ mb: 2, p: 2, border: '1px solid #e0e0e0', borderRadius: 1 }}>
                        <Typography variant="subtitle1" fontWeight="bold">
-                         {company.companyName}
+                         {company.company_name}
                        </Typography>
                        <Typography variant="body2" color="textSecondary">
-                         Total: {company.totalIncidents} | Resueltos: {company.resolvedIncidents} | Pendientes: {company.pendingIncidents}
+                         Total de incidentes: {company.total_incidents} | Sucursales: {company.branches_count}
                        </Typography>
                      </Box>
                    ))}
