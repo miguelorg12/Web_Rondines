@@ -213,9 +213,10 @@ function Usuarios() {
            active: true
          };
          
-         // Solo agregar password si está lleno
+         // Solo agregar password y confirm_password si están llenos
          if (password && password.trim() !== '') {
            updateData.password = password;
+           updateData.confirm_password = confirmPassword;
          }
          
          // En modo edición, NO enviar role_id ni branch_id ya que no existen en el modelo User
@@ -240,9 +241,10 @@ function Usuarios() {
           active: true, // Por defecto activo
         };
         
-        // Solo agregar password si está lleno
+        // Solo agregar password y confirm_password si están llenos
         if (password && password.trim() !== '') {
           createData.password = password;
+          createData.confirm_password = confirmPassword;
         }
         
         // Para crear usuarios, requerir ambos campos

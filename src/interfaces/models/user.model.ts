@@ -37,6 +37,7 @@ export interface CreateUser {
   curp: string;
   email: string;
   password?: string; // Optional for editing
+  confirm_password?: string; // For password confirmation
   role_id?: number; // Required to assign specific role
   branch_id?: number; // Branch ID for user assignment
   active?: boolean; // Optional, defaults to true
