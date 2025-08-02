@@ -1,0 +1,153 @@
+import React, { useState, useEffect } from 'react';
+import { 
+  Box, 
+  Button, 
+  Typography, 
+  Paper, 
+  Alert,
+  CircularProgress 
+} from '@mui/material';
+import { AuthService } from '../services/authService';
+
+const Login: React.FC = () => {
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    // Forzar fondo blanco en body y html
+    document.body.style.backgroundColor = '#ffffff';
+    document.body.style.color = '#333';
+    document.documentElement.style.backgroundColor = '#ffffff';
+    
+    return () => {
+      // Limpiar al desmontar
+      document.body.style.backgroundColor = '';
+      document.body.style.color = '';
+      document.documentElement.style.backgroundColor = '';
+    };
+  }, []);
+
+  const handleOAuthLogin = async () => {
+    try {
+      setLoading(true);
+      setError(null);
+      
+      await AuthService.initiateLogin();
+      
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Error desconocido');
+      setLoading(false);
+    }
+  };
+
+  return (
+    <Box sx={{
+      minHeight: '100vh',
+      background: '#f5f5f5',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      padding: 2
+    }}>
+      <Paper sx={{
+        padding: 6,
+        borderRadius: 3,
+        boxShadow: '0 8px 32px rgba(0,0,0,0.1)',
+        maxWidth: 400,
+        width: '100%',
+        textAlign: 'center',
+        backgroundColor: '#ffffff'
+      }}>
+        {/* Logo o título */}
+        <Box sx={{ marginBottom: 4, textAlign: 'center' }}>
+          <Typography variant="h3" sx={{
+            fontFamily: 'Barlow, sans-serif',
+            fontWeight: 'bold',
+            color: '#1E2A38',
+            marginBottom: 2
+          }}>
+            RondiTrack
+          </Typography>
+          <Typography variant="h6" sx={{
+            fontFamily: 'Barlow, sans-serif',
+            color: '#666',
+            marginBottom: 3
+          }}>
+            Sistema de Gestión de Rondines
+          </Typography>
+        </Box>
+
+        {/* Error message */}
+        {error && (
+          <Alert severity="error" sx={{ marginBottom: 2 }}>
+            <Typography sx={{ fontFamily: "Barlow, sans-serif" }}>
+              {error}
+            </Typography>
+          </Alert>
+        )}
+
+        {/* Login button */}
+        <Button
+          onClick={handleOAuthLogin}
+          disabled={loading}
+          variant="contained"
+          size="large"
+          sx={{
+            backgroundColor: '#3B8EE7',
+            color: '#FFFFFF',
+            fontFamily: 'Barlow, sans-serif',
+            fontWeight: 'bold',
+            textTransform: 'none',
+            borderRadius: 2,
+            padding: '16px 48px',
+            fontSize: '18px',
+            minWidth: '300px',
+            '&:hover': {
+              backgroundColor: '#1E2A38',
+            },
+            '&:disabled': {
+              backgroundColor: '#ccc',
+            },
+          }}
+        >
+          {loading ? (
+            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+              <CircularProgress size={20} sx={{ color: 'white' }} />
+              <span>Iniciando sesión...</span>
+            </Box>
+          ) : (
+            <span>Iniciar Sesión OAuth2</span>
+          )}
+        </Button>
+
+        {/* Additional info */}
+        <Typography variant="body2" sx={{
+          fontFamily: 'Barlow, sans-serif',
+          color: '#999',
+          marginTop: 3,
+          fontSize: '14px'
+        }}>
+          Utiliza tus credenciales corporativas para acceder al sistema
+        </Typography>
+
+                {/* Footer info */}
+        <Box sx={{ 
+          marginTop: 4, 
+          paddingTop: 2, 
+          borderTop: '1px solid #eee',
+          textAlign: 'center' 
+        }}>
+          <Typography variant="caption" sx={{
+            fontFamily: 'Barlow, sans-serif',
+            color: '#bbb',
+            fontSize: '12px'
+          }}>
+            © 2024 RondiTrack - Sistema de Gestión de Rondines
+          </Typography>
+        </Box>
+      </Paper>
+    </Box>
+  );
+};
+
+export default Login; 
