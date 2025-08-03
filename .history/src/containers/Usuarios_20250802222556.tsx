@@ -20,11 +20,13 @@ import {
   InputLabel,
   Alert,
   CircularProgress,
+  Typography,
 } from "@mui/material";
 import type { SelectChangeEvent } from "@mui/material";
 import Pagination from "@mui/material/Pagination";
 import Stack from "@mui/material/Stack";
 import { useGetUsersQuery, useCreateUserMutation, useUpdateUserMutation, useDeleteUserMutation } from "../redux/users/usersApi";
+import { useGetBranchesQuery } from "../redux/branches/branchesApi";
 
 import type { CreateUser, User } from "../interfaces";
 import { validators } from "../utils/validators";
@@ -56,6 +58,7 @@ function Usuarios() {
   
   // API hooks
   const { data: users = [], error, isLoading, refetch } = useGetUsersQuery();
+  const { data: branches = [] } = useGetBranchesQuery();
 
   const [createUser, { isLoading: isCreating, error: createError, reset: resetCreateError }] = useCreateUserMutation();
   const [updateUser, { isLoading: isUpdating, error: updateError, reset: resetUpdateError }] = useUpdateUserMutation();
@@ -102,11 +105,12 @@ function Usuarios() {
         email: email.trim(),
         password: password.trim(),
         roleId,
+        branchId,
         isEditMode,
         isDisabled
       });
     }
-  }, [openModal, isCreating, isUpdating, name, lastName, curp, email, password, roleId, isEditMode]);
+  }, [openModal, isCreating, isUpdating, name, lastName, curp, email, password, roleId, branchId, isEditMode]);
 
   // Filtrar usuarios
   const filteredData = users.filter(
@@ -139,6 +143,7 @@ function Usuarios() {
     setPassword("");
     setConfirmPassword("");
     setRoleId(0);
+    setBranchId(0);
   };
 
   const handleEditUser = (user: User) => {
@@ -151,6 +156,7 @@ function Usuarios() {
     setPassword(""); // No mostrar contraseña actual
     setConfirmPassword("");
     setRoleId(user.role.id);
+    setBranchId(user.branch?.[0]?.id || 0); // Tomar el primer branch del array
 
     setOpenModal(true);
   };
@@ -206,14 +212,10 @@ function Usuarios() {
            active: true
          };
          
-         // En actualización, SOLO enviar password y confirm_password si se cambia la contraseña
+         // Solo agregar password y confirm_password si están llenos
          if (password && password.trim() !== '') {
            updateData.password = password;
            updateData.confirm_password = confirmPassword;
-           console.log("🔍 Contraseña incluida en update:", { password: password.substring(0, 3) + "***" });
-         } else {
-           console.log("🔍 NO se incluye contraseña en update (campos vacíos)");
-           // Si no se cambia la contraseña, NO enviar password para evitar que el backend lo ponga como null
          }
          
          // En modo edición, NO enviar role_id ni branch_id ya que no existen en el modelo User
@@ -238,15 +240,16 @@ function Usuarios() {
           active: true, // Por defecto activo
         };
         
-        // En creación, SIEMPRE enviar password y confirm_password si están llenos
+        // Solo agregar password y confirm_password si están llenos
         if (password && password.trim() !== '') {
           createData.password = password;
           createData.confirm_password = confirmPassword;
         }
         
-        // Para crear usuarios, requerir solo role_id
-        if (roleId > 0) {
+        // Para crear usuarios, requerir ambos campos
+        if (roleId > 0 && branchId > 0) {
           createData.role_id = roleId;
+          createData.branch_id = branchId;
         }
         
         await createUser(createData).unwrap();
@@ -547,13 +550,40 @@ function Usuarios() {
                     label="Rol"
                     required={!isEditMode}
                   >
-                    <MenuItem value={0}>Seleccionar rol</MenuItem>
                     <MenuItem value={1}>SuperAdmin</MenuItem>
                     <MenuItem value={2}>CompanyAdmin</MenuItem>
                     <MenuItem value={3}>BranchAdmin</MenuItem>
                     <MenuItem value={4}>Guard</MenuItem>
                   </Select>
                 </FormControl>
+                <FormControl fullWidth sx={{ flex: 1 }}>
+                  <InputLabel id="branch-label">Sucursal</InputLabel>
+                  <Select
+                    labelId="branch-label"
+                    value={branchId}
+                    onChange={(e) => setBranchId(Number(e.target.value))}
+                    className="custom-textfield"
+                    label="Sucursal"
+                    required={!isEditMode}
+                  >
+                    <MenuItem value={0}>Seleccionar sucursal</MenuItem>
+                    {branches.map((branch) => (
+                      <MenuItem key={branch.id} value={branch.id}>
+                        {branch.name}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
+              </Box>
+              
+              {/* Mensaje informativo */}
+              <Box sx={{ mt: 2, p: 2, bgcolor: 'info.light', borderRadius: 1 }}>
+                <Typography variant="body2" color="info.contrastText">
+                  <strong>Nota:</strong> {isEditMode 
+                    ? "Puede modificar el rol y la sucursal del usuario." 
+                    : "Para crear un usuario, debe seleccionar un rol y una sucursal."
+                  }
+                </Typography>
               </Box>
           </Box>
         </DialogContent>
@@ -568,7 +598,7 @@ function Usuarios() {
                      <Button 
              className="create-btn" 
              onClick={handleCreateUser}
-             disabled={isCreating || isUpdating || !name.trim() || !lastName.trim() || !curp.trim() || !email.trim() || (!isEditMode && !password.trim()) || (!isEditMode && !roleId)}
+             disabled={isCreating || isUpdating || !name.trim() || !lastName.trim() || !curp.trim() || !email.trim() || (!isEditMode && !password.trim()) || (!isEditMode && (!roleId || !branchId))}
            >
              {isCreating || isUpdating ? (isEditMode ? 'Actualizando...' : 'Creando...') : (isEditMode ? 'Actualizar' : 'Crear')}
            </Button>

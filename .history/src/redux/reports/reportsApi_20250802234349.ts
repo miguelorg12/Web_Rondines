@@ -25,11 +25,11 @@ export const reportsApi = createApi({
       transformResponse: (response: ReportsApiResponse) => response.data,
       providesTags: ['Report'],
     }),
-    updateIncidentStatus: builder.mutation<Report, { id: number; status: string }>({
-      query: ({ id, status }) => ({
+    updateIncidentStatus: builder.mutation<Report, { id: number; status: string; additional_status?: string }>({
+      query: ({ id, status, additional_status }) => ({
         url: `/incidents/${id}`,
         method: 'PUT',
-        body: { status },
+        body: { status, additional_status },
       }),
       invalidatesTags: ['Report'],
     }),

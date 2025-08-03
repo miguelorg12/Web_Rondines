@@ -41,6 +41,7 @@ function Reportes() {
   const [statusModalOpen, setStatusModalOpen] = useState(false);
   const [selectedIncident, setSelectedIncident] = useState<Report | null>(null);
   const [newStatus, setNewStatus] = useState<string>("");
+  const [additionalStatus, setAdditionalStatus] = useState<string>("");
 
   // API hooks
   const { data: reports = [], error, isLoading } = useGetReportsQuery();
@@ -82,6 +83,7 @@ function Reportes() {
     setStatusModalOpen(false);
     setSelectedIncident(null);
     setNewStatus("");
+    setAdditionalStatus("");
   };
 
   const handleUpdateStatus = async () => {

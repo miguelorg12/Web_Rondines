@@ -210,10 +210,6 @@ function Usuarios() {
          if (password && password.trim() !== '') {
            updateData.password = password;
            updateData.confirm_password = confirmPassword;
-           console.log("🔍 Contraseña incluida en update:", { password: password.substring(0, 3) + "***" });
-         } else {
-           console.log("🔍 NO se incluye contraseña en update (campos vacíos)");
-           // Si no se cambia la contraseña, NO enviar password para evitar que el backend lo ponga como null
          }
          
          // En modo edición, NO enviar role_id ni branch_id ya que no existen en el modelo User

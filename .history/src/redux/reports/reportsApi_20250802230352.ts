@@ -28,7 +28,7 @@ export const reportsApi = createApi({
     updateIncidentStatus: builder.mutation<Report, { id: number; status: string }>({
       query: ({ id, status }) => ({
         url: `/incidents/${id}`,
-        method: 'PUT',
+        method: 'PATCH',
         body: { status },
       }),
       invalidatesTags: ['Report'],

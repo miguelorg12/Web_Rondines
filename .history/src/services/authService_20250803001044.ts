@@ -153,7 +153,7 @@ export class AuthService {
       
       return false;
       
-    } catch {
+    } catch (error) {
       this.logout();
       return false;
     }

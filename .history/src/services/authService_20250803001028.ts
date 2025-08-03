@@ -153,7 +153,7 @@ export class AuthService {
       
       return false;
       
-    } catch {
+    } catch (error) {
       this.logout();
       return false;
     }
@@ -161,24 +161,29 @@ export class AuthService {
   
   // Obtener información del usuario
   static async getUserInfo(): Promise<unknown> {
-    const token = this.getAccessToken();
-    
-    if (!token) {
-      throw new Error('No hay token de acceso');
+    try {
+      const token = this.getAccessToken();
+      
+      if (!token) {
+        throw new Error('No hay token de acceso');
+      }
+      
+      const response = await fetch(`${ronditrackApiUrl}user/profile`, {
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Accept': 'application/json',
+        },
+      });
+      
+      if (!response.ok) {
+        throw new Error('Error al obtener información del usuario');
+      }
+      
+      return await response.json();
+      
+    } catch (error) {
+      throw error;
     }
-    
-    const response = await fetch(`${ronditrackApiUrl}user/profile`, {
-      headers: {
-        'Authorization': `Bearer ${token}`,
-        'Accept': 'application/json',
-      },
-    });
-    
-    if (!response.ok) {
-      throw new Error('Error al obtener información del usuario');
-    }
-    
-    return await response.json();
   }
 }
 

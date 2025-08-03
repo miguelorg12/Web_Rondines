@@ -82,6 +82,7 @@ function Reportes() {
     setStatusModalOpen(false);
     setSelectedIncident(null);
     setNewStatus("");
+    setAdditionalStatus("");
   };
 
   const handleUpdateStatus = async () => {
@@ -90,7 +91,8 @@ function Reportes() {
     try {
       await updateStatus({
         id: selectedIncident.id,
-        status: newStatus
+        status: newStatus,
+        additional_status: additionalStatus
       }).unwrap();
       
       showToast("Estado del incidente actualizado correctamente", "success");
@@ -292,7 +294,7 @@ function Reportes() {
               Incidente #{selectedIncident?.id} - {selectedIncident?.description.substring(0, 50)}...
             </Typography>
             
-            <FormControl fullWidth>
+            <FormControl fullWidth sx={{ mb: 2 }}>
               <InputLabel id="status-label">Nuevo Estado</InputLabel>
               <Select
                 labelId="status-label"
@@ -304,6 +306,22 @@ function Reportes() {
                 <MenuItem value="en_revision">En Revisión</MenuItem>
                 <MenuItem value="resuelto">Resuelto</MenuItem>
                 <MenuItem value="descartado">Descartado</MenuItem>
+              </Select>
+            </FormControl>
+            
+            <FormControl fullWidth>
+              <InputLabel id="additional-status-label">Estado Adicional</InputLabel>
+              <Select
+                labelId="additional-status-label"
+                value={additionalStatus}
+                onChange={(e) => setAdditionalStatus(e.target.value)}
+                label="Estado Adicional"
+              >
+                <MenuItem value="">Sin estado adicional</MenuItem>
+                <MenuItem value="urgente">Urgente</MenuItem>
+                <MenuItem value="prioritario">Prioritario</MenuItem>
+                <MenuItem value="normal">Normal</MenuItem>
+                <MenuItem value="baja_prioridad">Baja Prioridad</MenuItem>
               </Select>
             </FormControl>
           </Box>

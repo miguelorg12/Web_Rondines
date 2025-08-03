@@ -1,0 +1,155 @@
+# RondiTrack - Guía de Despliegue
+
+## Configuración de Entornos
+
+### Variables de Entorno
+
+El proyecto usa variables de entorno para configurar diferentes ambientes. Los archivos de configuración están en la raíz del proyecto:
+
+- `env.development` - Desarrollo local
+- `env.qa` - Ambiente de QA
+- `env.production` - Producción
+
+### Scripts Disponibles
+
+#### Desarrollo
+```bash
+# Desarrollo local
+npm run dev:local
+
+# QA
+npm run dev:qa
+
+# Staging
+npm run dev:staging
+
+# Producción
+npm run dev:production
+```
+
+#### Build
+```bash
+# Build para desarrollo local
+npm run build:local
+
+# Build para QA
+npm run build:qa
+
+# Build para staging
+npm run build:staging
+
+# Build para producción
+npm run build:production
+```
+
+#### Preview
+```bash
+# Preview desarrollo local
+npm run preview:local
+
+# Preview QA
+npm run preview:qa
+
+# Preview staging
+npm run preview:staging
+
+# Preview producción
+npm run preview:production
+```
+
+## Configuración OAuth
+
+### URLs por Entorno
+
+#### Desarrollo Local
+- **API Base**: `http://localhost:3342/api/v1/`
+- **OAuth Token**: `http://localhost:3343/oauth/token`
+- **OAuth Authorize**: `http://localhost:3343/oauth/v1/authorize`
+
+#### QA
+- **API Base**: `https://qa.api.ronditrack.online/api/v1/`
+- **OAuth Token**: `https://api-sec-qa.ronditrack.online/oauth/token`
+- **OAuth Authorize**: `https://api-sec-qa.ronditrack.online/oauth/v1/authorize`
+
+#### Producción
+- **API Base**: `https://api.ronditrack.online/api/v1/`
+- **OAuth Token**: `https://api-sec.ronditrack.online/oauth/token`
+- **OAuth Authorize**: `https://api-sec.ronditrack.online/oauth/v1/authorize`
+
+## Despliegue
+
+### 1. Desarrollo Local
+```bash
+# Instalar dependencias
+npm install
+
+# Ejecutar en modo desarrollo
+npm run dev:local
+```
+
+### 2. QA
+```bash
+# Build para QA
+npm run build:qa
+
+# Preview QA
+npm run preview:qa
+```
+
+### 3. Producción
+```bash
+# Build para producción
+npm run build:production
+
+# Preview producción
+npm run preview:production
+```
+
+## Configuración de Variables de Entorno
+
+Para personalizar las URLs, puedes crear archivos `.env` locales:
+
+### `.env.local` (desarrollo)
+```env
+VITE_APP_ENV=development
+VITE_API_BASE_URL=http://localhost:3342/api/v1/
+VITE_OAUTH_URL=http://localhost:3343/oauth/token
+VITE_OAUTH_AUTHORIZE_URL=http://localhost:3343/oauth/v1/authorize
+```
+
+### `.env.qa` (QA)
+```env
+VITE_APP_ENV=qa
+VITE_API_BASE_URL=https://qa.api.ronditrack.online/api/v1/
+VITE_OAUTH_URL=https://api-sec-qa.ronditrack.online/oauth/token
+VITE_OAUTH_AUTHORIZE_URL=https://api-sec-qa.ronditrack.online/oauth/v1/authorize
+```
+
+### `.env.production` (producción)
+```env
+VITE_APP_ENV=production
+VITE_API_BASE_URL=https://api.ronditrack.online/api/v1/
+VITE_OAUTH_URL=https://api-sec.ronditrack.online/oauth/token
+VITE_OAUTH_AUTHORIZE_URL=https://api-sec.ronditrack.online/oauth/v1/authorize
+```
+
+## Notas Importantes
+
+1. **OAuth Configuration**: Ya no está hardcodeado con localhost, usa las URLs desde `apiConfig.ts`
+2. **Environment Detection**: Se basa en variables de entorno en lugar de detectar automáticamente el hostname
+3. **Build Process**: Cada entorno tiene su propio proceso de build
+4. **API Endpoints**: Todos los endpoints usan la configuración centralizada
+
+## Troubleshooting
+
+### Error de OAuth
+Si hay problemas con OAuth, verifica:
+1. Que el servidor OAuth esté ejecutándose
+2. Que las URLs en la configuración sean correctas
+3. Que el client_id sea válido
+
+### Error de API
+Si hay problemas con la API, verifica:
+1. Que el servidor API esté ejecutándose
+2. Que las URLs en la configuración sean correctas
+3. Que el token de acceso sea válido 

@@ -58,7 +58,7 @@ function Sucursales() {
   // API hooks
   const { data: branches = [], error, isLoading, refetch } = useGetBranchesQuery();
   const { data: companies = [], isLoading: isLoadingCompanies } = useGetCompaniesQuery();
-  const { data: users = [], isLoading: isLoadingUsers } = useGetUsersBySpecificRolesQuery();
+  const { data: users = [], isLoading: isLoadingUsers } = useGetUsersQuery();
 
   // Debug: Log cuando los datos cambian
   useEffect(() => {
@@ -153,13 +153,14 @@ function Sucursales() {
     }
 
     if (editingBranch) {
-      // Actualizar sucursal - incluir todos los campos
+      // Actualizar sucursal - solo campos básicos
       const updateData: UpdateBranch = {
         name: name || undefined,
         address: address || undefined,
-        company_id: companyId > 0 ? companyId : undefined,
-        user_id: userId > 0 ? userId : undefined,
       };
+
+      // NO enviar user_id ni company_id en update ya que no existen en el modelo Branch
+      // Estos campos solo se usan para crear sucursales, no para actualizar
 
       console.log('🔍 Datos de actualización:', updateData);
 

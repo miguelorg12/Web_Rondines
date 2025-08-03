@@ -219,7 +219,7 @@ function Reportes() {
                   <TableCell>
                     <Chip
                       label={row.status}
-                      color={getStatusColor(row.status) as "info" | "warning" | "success" | "default"}
+                      color={getStatusColor(row.status) as any}
                       size="small"
                     />
                   </TableCell>
@@ -267,64 +267,6 @@ function Reportes() {
         onClose={handleCloseDetailModal}
         report={selectedReport}
       />
-
-      {/* Modal para cambiar estado del incidente */}
-      <Dialog 
-        open={statusModalOpen} 
-        onClose={handleCloseStatusModal} 
-        maxWidth="sm" 
-        fullWidth
-        PaperProps={{
-          sx: {
-            borderRadius: 2,
-            padding: 2,
-          }
-        }}
-      >
-        <DialogTitle sx={{ pb: 1 }}>
-          <p className="cu-p" style={{ margin: 0 }}>
-            Cambiar Estado del Incidente
-          </p>
-        </DialogTitle>
-        <DialogContent>
-          <Box sx={{ pt: 1 }}>
-            <Typography variant="body2" sx={{ mb: 2 }}>
-              Incidente #{selectedIncident?.id} - {selectedIncident?.description.substring(0, 50)}...
-            </Typography>
-            
-            <FormControl fullWidth>
-              <InputLabel id="status-label">Nuevo Estado</InputLabel>
-              <Select
-                labelId="status-label"
-                value={newStatus}
-                onChange={(e) => setNewStatus(e.target.value)}
-                label="Nuevo Estado"
-              >
-                <MenuItem value="reportado">Reportado</MenuItem>
-                <MenuItem value="en_revision">En Revisión</MenuItem>
-                <MenuItem value="resuelto">Resuelto</MenuItem>
-                <MenuItem value="descartado">Descartado</MenuItem>
-              </Select>
-            </FormControl>
-          </Box>
-        </DialogContent>
-        <DialogActions sx={{ px: 3, pb: 2 }}>
-          <Button 
-            className="cancel-btn" 
-            onClick={handleCloseStatusModal}
-            disabled={isUpdatingStatus}
-          >
-            Cancelar
-          </Button>
-          <Button 
-            className="create-btn" 
-            onClick={handleUpdateStatus}
-            disabled={isUpdatingStatus || !newStatus}
-          >
-            {isUpdatingStatus ? 'Actualizando...' : 'Actualizar Estado'}
-          </Button>
-        </DialogActions>
-      </Dialog>
     </Paper>
   );
 }
