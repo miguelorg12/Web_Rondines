@@ -33,7 +33,7 @@ const getApiConfig = () => {
     
     default:
       return {
-        ronditrackApiUrl: 'https://api-qa.ronditrack.online/api/v1/',
+        ronditrackApiUrl: 'https://api-sec-qa.ronditrack.online/api/v1/',
         oauthUrl: 'https://api-sec-qa.ronditrack.online/oauth/v1/token',
         USE_TOKEN: true,
       };

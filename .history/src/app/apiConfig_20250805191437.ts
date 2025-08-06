@@ -5,8 +5,8 @@ const getApiConfig = () => {
   switch (env) {
     case 'development':
       return {
-        ronditrackApiUrl: import.meta.env.VITE_API_BASE_URL || 'https://api-qa.ronditrack.online/api/v1/',
-        oauthUrl: import.meta.env.VITE_OAUTH_URL || 'https://api-sec-qa.ronditrack.online/oauth/v1/token',
+        ronditrackApiUrl: import.meta.env.VITE_API_BASE_URL || 'http://localhost:3342/api/v1/',
+        oauthUrl: import.meta.env.VITE_OAUTH_URL || 'https://api-sec-qa.ronditrack.online//oauth/v1/token',
         USE_TOKEN: true,
       };
     
@@ -33,8 +33,8 @@ const getApiConfig = () => {
     
     default:
       return {
-        ronditrackApiUrl: 'https://api-qa.ronditrack.online/api/v1/',
-        oauthUrl: 'https://api-sec-qa.ronditrack.online/oauth/v1/token',
+        ronditrackApiUrl: 'http://localhost:3342/api/v1/',
+        oauthUrl: 'http://localhost:3343/oauth/v1/token',
         USE_TOKEN: true,
       };
   }

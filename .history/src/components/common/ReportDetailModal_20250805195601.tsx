@@ -161,7 +161,7 @@ const ReportDetailModal: React.FC<ReportDetailModalProps> = ({
                   Nombre
                 </Typography>
                 <Typography variant="body1">
-                  {report.branch?.name || 'N/A'}
+                  {report.branch.name}
                 </Typography>
               </Grid>
               <Grid item xs={12} sm={6}>
@@ -169,7 +169,7 @@ const ReportDetailModal: React.FC<ReportDetailModalProps> = ({
                   Dirección
                 </Typography>
                 <Typography variant="body1">
-                  {report.branch?.address || 'N/A'}
+                  {report.branch.address}
                 </Typography>
               </Grid>
             </Grid>

@@ -1,0 +1,6 @@
+# Development Environment Configuration
+VITE_APP_ENV=development
+VITE_APP_TITLE=RondiTrack - Development
+VITE_API_BASE_URL=http://localhost:3342/api/v1/
+VITE_OAUTH_URL=VITE_OAUTH_URL=https://api-sec.ronditrack.online/oauth/v1/token
+VITE_OAUTH_AUTHORIZE_URL=http://localhost:3343/oauth/v1/authorize 

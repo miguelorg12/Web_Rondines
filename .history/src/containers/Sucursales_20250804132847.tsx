@@ -236,7 +236,7 @@ function Sucursales() {
   // Función para obtener el nombre del usuario
   const getUserName = (branch: Branch) => {
     if (!branch.user) return 'N/A';
-    return `${branch.user.name || ''} ${branch.user.last_name || ''}`.trim() || 'N/A';
+    return `${branch.user.name} ${branch.user.last_name}`;
   };
 
   if (isLoading) {

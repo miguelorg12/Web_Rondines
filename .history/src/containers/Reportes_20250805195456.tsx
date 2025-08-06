@@ -50,9 +50,9 @@ function Reportes() {
   const filteredData = reports.filter(
     (item) =>
       item.description.toLowerCase().includes(filterText.toLowerCase()) ||
-      (item.user?.name || '').toLowerCase().includes(filterText.toLowerCase()) ||
-      (item.user?.last_name || '').toLowerCase().includes(filterText.toLowerCase()) ||
-      (item.branch?.name || '').toLowerCase().includes(filterText.toLowerCase()) ||
+      item.user.name.toLowerCase().includes(filterText.toLowerCase()) ||
+      item.user.last_name.toLowerCase().includes(filterText.toLowerCase()) ||
+      item.branch.name.toLowerCase().includes(filterText.toLowerCase()) ||
       item.status.toLowerCase().includes(filterText.toLowerCase()) ||
       item.severity.toLowerCase().includes(filterText.toLowerCase())
   );

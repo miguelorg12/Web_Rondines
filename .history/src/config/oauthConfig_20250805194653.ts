@@ -19,7 +19,7 @@ const OAUTH_CONFIG = {
       console.log('🔍 OAUTH_CONFIG.checkOAuthServer: Verificando servidor OAuth...');
       console.log('🔍 OAUTH_CONFIG.checkOAuthServer: URL:', authorizeUrl);
       
-      await fetch(authorizeUrl, {
+      const response = await fetch(authorizeUrl, {
         method: 'HEAD',
         mode: 'no-cors', // Para evitar errores CORS en la verificación
       });

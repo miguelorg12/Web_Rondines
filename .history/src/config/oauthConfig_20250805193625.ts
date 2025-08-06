@@ -5,7 +5,7 @@ const OAUTH_CONFIG = {
   
   // URL base para autorización (derivada de oauthUrl)
   getAuthorizeUrl: () => {
-    const baseUrl = oauthUrl.replace('/oauth/v1/token', '');
+    const baseUrl = oauthUrl.replace('/oauth/token', '');
     return `${baseUrl}/oauth/v1/authorize`;
   },
   
@@ -19,7 +19,7 @@ const OAUTH_CONFIG = {
       console.log('🔍 OAUTH_CONFIG.checkOAuthServer: Verificando servidor OAuth...');
       console.log('🔍 OAUTH_CONFIG.checkOAuthServer: URL:', authorizeUrl);
       
-      await fetch(authorizeUrl, {
+      const response = await fetch(authorizeUrl, {
         method: 'HEAD',
         mode: 'no-cors', // Para evitar errores CORS en la verificación
       });
