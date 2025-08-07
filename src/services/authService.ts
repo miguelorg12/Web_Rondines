@@ -44,7 +44,7 @@ export class AuthService {
       }
       
       const clientId = OAUTH_CONFIG.CLIENT_ID;
-      const redirectUri = `${window.location.origin}/auth/callback`;
+      const redirectUri = `https://qa.ronditrack.online/auth/callback`;
       const responseType = "code";
       const codeVerifier = generateCodeVerifier();
       
